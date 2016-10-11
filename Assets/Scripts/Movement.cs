@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI; 
 
 public class Movement: MonoBehaviour {
 
@@ -7,6 +8,7 @@ public class Movement: MonoBehaviour {
 	const float moveSpeed = 5f;
 	public float thrust;  
 	bool controllable; 
+	public Text canMove; 
 
 	// "SerializeField" exposes a variable to the inspector without making it public
 	[SerializeField] float turnSpeed = 180f;
@@ -16,11 +18,14 @@ public class Movement: MonoBehaviour {
 
 		rbody = GetComponent<Rigidbody> (); 
 		controllable = true; 
+		canMove.text = "I can move!"; 
 
 	}
 
 	// Update is called once per frame
 	void Update () {
+
+		//Camera.main.transform.position = transform.position + new Vector3 (54.139f, 71.418f, 0f); 
 
 		if (controllable) {
 
@@ -36,9 +41,12 @@ public class Movement: MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.W)) {
 
-			rbody.AddRelativeForce (Vector3.forward * thrust);
+				rbody.AddRelativeForce (Vector3.left * thrust);
 
 				controllable = false; 
+
+				canMove.text = "Can't stop!";
+
 
 			} //relative force if bracket
 				
@@ -49,6 +57,7 @@ public class Movement: MonoBehaviour {
 	void OnCollisionEnter () {
 
 		controllable = true; 
-	}
+		canMove.text = "I can move!"; 
+	} //void oncollision enter bracket 
 
 } //whole class bracket
