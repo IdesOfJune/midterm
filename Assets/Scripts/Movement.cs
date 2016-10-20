@@ -9,16 +9,54 @@ public class Movement: MonoBehaviour {
 	public float thrust;  
 	bool controllable; 
 	public Text canMove; 
+	public GameObject rArmRight; 
+	public GameObject rArmLeft; 
+	public GameObject lArmLeft; 
+	public GameObject lArmRight; 
 
 	// "SerializeField" exposes a variable to the inspector without making it public
 	[SerializeField] float turnSpeed = 180f;
 	Rigidbody rbody; 
 
+
 	void Start () {
 
 		rbody = GetComponent<Rigidbody> (); 
+		controllable = false; 
+		canMove.text = "You know what?"; 
+		rArmRight = GameObject.Find ("raisedArmright");
+		rArmRight.SetActive (false); 
+
+		rArmLeft = GameObject.Find ("raisedArmleft"); 
+		rArmLeft.SetActive (false); 
+
+		lArmLeft = GameObject.Find ("loweredArmLeft");
+		lArmLeft.SetActive (true); 
+
+		lArmRight = GameObject.Find ("loweredArmRight"); 
+		lArmRight.SetActive (true); 
+
+		//player pose default
+
+		StartCoroutine (Speech ()); 
+
+	}
+
+	IEnumerator Speech () {
+
+		yield return new WaitForSeconds(2f); 
+
+		canMove.text = "Screw  ice  skating!"; 
+
+		yield return new WaitForSeconds (3f); 
+
+		canMove.text = "I'm  gonna  bump  into \n as  many  things  as  possible."; 
+
+		yield return new WaitForSeconds(3f); 
+
+		canMove.text = "Let's go!"; 
+
 		controllable = true; 
-		canMove.text = "I can move!"; 
 
 	}
 
@@ -39,6 +77,8 @@ public class Movement: MonoBehaviour {
 		//transform.Translate(0f, 0f, inputY * moveSpeed * Time.deltaTime); // move forward / backward
 		transform.Rotate(0f, inputX * turnSpeed * Time.deltaTime, 0f ); // turn left / right
 
+		//player pose default 
+
 		if (Input.GetKeyDown (KeyCode.W)) {
 
 				rbody.AddRelativeForce (Vector3.left * thrust);
@@ -47,6 +87,14 @@ public class Movement: MonoBehaviour {
 
 				canMove.text = "Can't stop!";
 
+				rArmLeft.SetActive (true); 
+				rArmRight.SetActive (true); 
+
+				lArmLeft.SetActive (false); 
+				lArmRight.SetActive (false); 
+
+				//player pose hands up! 
+
 
 			} //relative force if bracket
 				
@@ -54,10 +102,34 @@ public class Movement: MonoBehaviour {
 
 	} //void update bracket
 
-	void OnCollisionEnter () {
+	void OnCollisionEnter (Collision floor) {
 
-		controllable = true; 
-		canMove.text = "I can move!"; 
+		if(floor.gameObject.tag == "notfloor") {
+
+			controllable = true; 
+			canMove.text = "I can move!"; 
+
+			rArmLeft.SetActive (false); 
+			rArmRight.SetActive (false); 
+
+			lArmLeft.SetActive (true); 
+			lArmRight.SetActive (true); 
+
+		}
+
+		if (floor.gameObject.tag == "thing") {
+
+			controllable = true; 
+			canMove.text = "I can move!"; 
+
+			rArmLeft.SetActive (false); 
+			rArmRight.SetActive (false); 
+
+			lArmLeft.SetActive (true); 
+			lArmRight.SetActive (true); 
+
+		}
+			
 	} //void oncollision enter bracket 
 
 } //whole class bracket
