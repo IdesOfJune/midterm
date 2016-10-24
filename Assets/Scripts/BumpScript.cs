@@ -8,6 +8,7 @@ public class BumpScript : MonoBehaviour {
 	public static int bumpCount; //how many times player bumped into something
 	public Text bumpDisplay; 
 	bool hasBumped = false; 
+	public AudioSource bumpSound; 
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +30,7 @@ public class BumpScript : MonoBehaviour {
 		if (col.gameObject.tag == "thing" && hasBumped == false ) {
 
 			bumpCount++; 
+			bumpSound.Play (); 
 			SetBumpDisplayText (); 
 			Debug.Log ("bumped!");
 			hasBumped = true; 
