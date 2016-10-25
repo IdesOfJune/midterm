@@ -14,7 +14,7 @@ public class PlayAgain : MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.R)) {
 			//if player presses R the game resets by reloading the current scene
-			SceneManager.LoadScene( 0 ); 
+			SceneManager.LoadScene( 2 ); 
 
 		}
 

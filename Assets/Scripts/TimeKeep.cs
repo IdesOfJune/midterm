@@ -23,7 +23,7 @@ public class TimeKeep : MonoBehaviour {
 
 		if (timeLeft <= 0f) {
 
-			SceneManager.LoadScene (1); 
+			SceneManager.LoadScene (3); 
 
 		}
 	
